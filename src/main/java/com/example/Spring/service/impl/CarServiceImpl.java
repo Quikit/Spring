@@ -51,28 +51,17 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseEntity<Car> get(Long id) {
-        return ResponseEntity.of(repository.findById(id));
+    public Car get(Long id) {
+        return repository.findById(id).get();
     }
 
     @Override
-    public ResponseEntity<List<Car>> getAll() {
+    public List<Car> getAll() {
         List<Car> all = null;
         repository.findAll().forEach(all::add);
 
         List<JSONObject> entities = new ArrayList<JSONObject>();
-        for (Car car : all) {
-            JSONObject entity = new JSONObject();
-            try {
-                entity.put("id", car.getId());
-                entity.put("carColor", car.getColorCar());
-                entity.put("carName", car.getNameCar());
-                entity.put("idPerson", car.getIdPerson());
-                entities.add(entity);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return new ResponseEntity(entities, HttpStatus.OK);
+
+        return all;
     }
 }

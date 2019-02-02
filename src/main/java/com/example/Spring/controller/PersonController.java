@@ -3,6 +3,7 @@ package com.example.Spring.controller;
 import com.example.Spring.entity.Person;
 import com.example.Spring.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,12 @@ public class PersonController {
 
     @RequestMapping (value = "/",method = RequestMethod.GET)
     public ResponseEntity<List<Person>> getAll(){
-        return service.getAll();
+        return new ResponseEntity(service.getAll(), HttpStatus.OK);
     }
 
     @RequestMapping (value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Person> get(@PathVariable("id") Long id){
-        return service.get(id);
+        return new ResponseEntity( service.get(id),HttpStatus.OK);
     }
 
     @RequestMapping (value = "/",method = RequestMethod.POST)

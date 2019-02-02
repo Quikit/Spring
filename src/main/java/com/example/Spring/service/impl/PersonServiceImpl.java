@@ -3,6 +3,7 @@ package com.example.Spring.service.impl;
 import com.example.Spring.entity.Person;
 import com.example.Spring.repository.PersonRepository;
 import com.example.Spring.service.PersonService;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonServiceImpl implements PersonService {
 
-    @Autowired
-    private PersonRepository repository;
+    private final PersonRepository repository;
 
     @Override
     public void create(Person entity) {
@@ -48,31 +49,19 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public ResponseEntity<Person> get(Long id) {
-        return ResponseEntity.of(repository.findById(id));
+    public Person get(Long id) {
+        return repository.findById(id).get();
     }
 
     @Override
-    public ResponseEntity<List<Person>> getAll() {
+    public List<Person> getAll() {
        /* List<Person> all = null;
         repository.findAll().forEach(all::add);
         Optional<Person> min = all;
        return ResponseEntity.of(all);*/
-        List<Person> all = null;
+        List<Person> all = new ArrayList<>();
         repository.findAll().forEach(all::add);
 
-        List<JSONObject> entities = new ArrayList<JSONObject>();
-        for (Person person : all) {
-            JSONObject entity = new JSONObject();
-            try {
-                entity.put("id", person.getId());
-                entity.put("FirstName", person.getFirstName());
-                entity.put("LastName", person.getLastName());
-                entities.add(entity);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return new ResponseEntity(entities, HttpStatus.OK);
+        return all;
     }
 }

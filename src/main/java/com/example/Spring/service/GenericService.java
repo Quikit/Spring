@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface GenericService <E> {
+
     void create(E entity);
 
     void delete(Long id);
@@ -14,7 +15,7 @@ public interface GenericService <E> {
 
     void update(Long id,E entity);
 
-    ResponseEntity<E> get(Long id);
+    E get(Long id);
 
-    ResponseEntity<List<E>> getAll();
+    List<E> getAll();
 }
