@@ -1,0 +1,48 @@
+package com.example.Spring.controller;
+
+import com.example.Spring.entity.Car;
+import com.example.Spring.service.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController("/api/v1/car")
+public class CarController {
+
+    @Autowired
+    private CarService service;
+
+    @RequestMapping (value = "/",method = RequestMethod.GET)
+    public ResponseEntity<List<Car>> getAll(){
+        return service.getAll();
+    }
+
+    @RequestMapping (value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Car> get(@PathVariable("id") Long id){
+        return service.get(id);
+    }
+
+    @RequestMapping (value = "/",method = RequestMethod.POST)
+    public void create(@RequestBody Car car){
+        service.create(car);
+    }
+
+    @RequestMapping (value = "/{id}",method = RequestMethod.PUT)
+    public void update(@PathVariable("id") Long id,@RequestBody Car car){
+        car.setId(id);
+        service.update(id,car);
+    }
+
+    @RequestMapping (value = "/{id}", method =  RequestMethod.DELETE)
+    public void delete(@PathVariable("id") Long id){
+        service.delete(id);
+    }
+
+    @RequestMapping (value = "/{id}",method = RequestMethod.PATCH)
+    public void patch(@PathVariable("id") Long id,@RequestBody Car car){
+        car.setId(id);
+        service.patch(id,car);
+    }
+}
