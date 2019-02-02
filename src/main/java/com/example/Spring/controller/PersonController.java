@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api/v1/person")
+@RestController
+@RequestMapping("/api/v1/person")
 public class PersonController {
 
     @Autowired
     private PersonService service;
 
-    @RequestMapping (value = "/",method = RequestMethod.GET)
+    @RequestMapping (method = RequestMethod.GET)
     public ResponseEntity<List<Person>> getAll(){
         return new ResponseEntity(service.getAll(), HttpStatus.OK);
     }
@@ -25,7 +26,7 @@ public class PersonController {
         return new ResponseEntity( service.get(id),HttpStatus.OK);
     }
 
-    @RequestMapping (value = "/",method = RequestMethod.POST)
+    @RequestMapping (method = RequestMethod.POST)
     public void create(@RequestBody Person person){
         service.create(person);
     }

@@ -3,14 +3,9 @@ package com.example.Spring.service.impl;
 import com.example.Spring.entity.Car;
 import com.example.Spring.repository.CarRepository;
 import com.example.Spring.service.CarService;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CarServiceImpl implements CarService {
@@ -59,8 +54,6 @@ public class CarServiceImpl implements CarService {
     public List<Car> getAll() {
         List<Car> all = null;
         repository.findAll().forEach(all::add);
-
-        List<JSONObject> entities = new ArrayList<JSONObject>();
 
         return all;
     }

@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/api/v1/car")
+@RestController
+@RequestMapping("/api/v1/car")
 public class CarController {
 
-   /* @Autowired
+    @Autowired
     private CarService service;
 
     @RequestMapping (value = "/",method = RequestMethod.GET)
@@ -45,5 +46,5 @@ public class CarController {
     public void patch(@PathVariable("id") Long id,@RequestBody Car car){
         car.setId(id);
         service.patch(id,car);
-    }*/
+    }
 }
