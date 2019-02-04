@@ -1,19 +1,25 @@
 package com.example.Spring.service.impl;
 
+import com.example.Spring.dto.PersonDTO;
 import com.example.Spring.entity.Person;
 import com.example.Spring.repository.PersonRepository;
 import com.example.Spring.service.PersonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonServiceImpl implements PersonService {
 
     private final PersonRepository repository;
+
+    @Autowired
+    ConversionService conversionService;
 
     @Override
     public void create(Person entity) {
@@ -45,19 +51,19 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person get(Long id) {
-        return repository.findById(id).get();
+    public PersonDTO get(Long id) {
+        Person person = repository.findById(id).get();
+        return conversionService.convert(person,PersonDTO.class);
     }
 
     @Override
-    public List<Person> getAll() {
-       /* List<Person> all = null;
-        repository.findAll().forEach(all::add);
-        Optional<Person> min = all;
-       return ResponseEntity.of(all);*/
+    public List<PersonDTO> getAll() {
         List<Person> all = new ArrayList<>();
         repository.findAll().forEach(all::add);
-
-        return all;
+        List<PersonDTO> allDTO = new ArrayList<>();
+        for(Person person : all){
+            allDTO.add(conversionService.convert(person,PersonDTO.class));
+        }
+        return allDTO;
     }
 }

@@ -1,17 +1,26 @@
 package com.example.Spring.service.impl;
 
+import com.example.Spring.dto.CarDTO;
 import com.example.Spring.entity.Car;
 import com.example.Spring.repository.CarRepository;
 import com.example.Spring.service.CarService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class CarServiceImpl implements CarService {
 
+
+    private final CarRepository repository;
+
     @Autowired
-    private CarRepository repository;
+    ConversionService conversionService;
 
     @Override
     public void create(Car entity) {
@@ -46,15 +55,19 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car get(Long id) {
-        return repository.findById(id).get();
+    public CarDTO get(Long id) {
+        Car car = repository.findById(id).get();
+        return conversionService.convert(car, CarDTO.class);
     }
 
     @Override
-    public List<Car> getAll() {
-        List<Car> all = null;
+    public List<CarDTO> getAll() {
+        List<Car> all = new ArrayList<>();
         repository.findAll().forEach(all::add);
-
-        return all;
+        List<CarDTO> allDTO = new ArrayList<>();
+        for(Car car : all){
+            allDTO.add(conversionService.convert(car,CarDTO.class));
+        }
+        return allDTO;
     }
 }
