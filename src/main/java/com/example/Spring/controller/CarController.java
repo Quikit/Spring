@@ -1,5 +1,6 @@
 package com.example.Spring.controller;
 
+import com.example.Spring.dto.CarDTO;
 import com.example.Spring.entity.Car;
 import com.example.Spring.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,17 @@ public class CarController {
     @Autowired
     private CarService service;
 
-    @RequestMapping (value = "/",method = RequestMethod.GET)
-    public ResponseEntity<List<Car>> getAll(){
+    @RequestMapping (method = RequestMethod.GET)
+    public ResponseEntity<List<CarDTO>> getAll(){
         return new ResponseEntity(service.getAll(), HttpStatus.OK);
     }
 
     @RequestMapping (value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Car> get(@PathVariable("id") Long id){
+    public ResponseEntity<CarDTO> get(@PathVariable("id") Long id){
         return new ResponseEntity( service.get(id),HttpStatus.OK);
     }
 
-    @RequestMapping (value = "/",method = RequestMethod.POST)
+    @RequestMapping (method = RequestMethod.POST)
     public void create(@RequestBody Car car){
         service.create(car);
     }

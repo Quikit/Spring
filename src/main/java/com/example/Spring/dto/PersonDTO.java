@@ -2,6 +2,7 @@ package com.example.Spring.dto;
 
 import lombok.Data;
 
+
 @Data
 public class PersonDTO {
     private long id;

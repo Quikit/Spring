@@ -15,7 +15,4 @@ public interface GenericService <E> {
 
     void update(Long id,E entity);
 
-    E get(Long id);
-
-    List<E> getAll();
 }
